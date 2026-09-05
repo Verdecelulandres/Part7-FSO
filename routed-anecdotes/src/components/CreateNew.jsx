@@ -7,9 +7,15 @@ const CreateNew = ({ addNew }) => {
   const info = useField('text');
   const navigate = useNavigate();
 
+  // const spreadWithoutReset = (fieldState) => {
+  //   const spreadable = {reset, ...fieldState};
+  //   return spreadable
+  // }
+
+  // const inputContent = {reset, ...content};
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(content, author, info);
     const newAnecdote = {
       content: content.value,
       author: author.value,
@@ -34,21 +40,21 @@ const CreateNew = ({ addNew }) => {
           content
           <input
             name="content"
-            {...content}
+            {...content.spreadable}
           />
         </div>
         <div>
           author
           <input
             name="author"
-            {...author}
+            {...author.spreadable}
           />
         </div>
         <div>
           url for more info
           <input
             name="info"
-            {...info}
+            {...info.spreadable}
           />
         </div>
         <button type="submit">create</button>

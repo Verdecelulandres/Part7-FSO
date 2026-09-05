@@ -11,11 +11,14 @@ const useField = (type) => {
     setValue('');
   }
 
+  const spreadable = { type, value, onChange }
+
   return {
     type,
     value,
     onChange,
-    reset
+    reset,
+    spreadable
   }
 }
 

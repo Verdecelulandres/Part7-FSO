@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3001/anecdotes'
+const baseUrl = `http://localhost:${process.env.NODE_ENV === 'test' ? '3002' : '3001'}/anecdotes`
 
 const getAll = async () => {
   const response = await fetch(baseUrl)

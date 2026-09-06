@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import anecdoteService from './services/anecdotes';
 import Menu from './components/Menu'
 import AnecdoteList from './components/AnecdoteList'
 import About from './components/About'
@@ -7,22 +8,11 @@ import Footer from './components/Footer'
 import CreateNew from './components/CreateNew'
 
 const App = () => {
-  const [anecdotes, setAnecdotes] = useState([
-    {
-      content: 'If it hurts, do it more often',
-      author: 'Jez Humble',
-      info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
-      votes: 0,
-      id: 1
-    },
-    {
-      content: 'Premature optimization is the root of all evil',
-      author: 'Donald Knuth',
-      info: 'http://wiki.c2.com/?PrematureOptimization',
-      votes: 0,
-      id: 2
-    }
-  ])
+  const [anecdotes, setAnecdotes] = useState([]);
+
+  useEffect(() => {
+    anecdoteService.getAll().then(data =>setAnecdotes(data));
+  }, []);
 
   const addAnecdote = (anecdote) => {
     setAnecdotes(anecdotes.concat({ ...anecdote, id: Math.round(Math.random() * 10000) }))

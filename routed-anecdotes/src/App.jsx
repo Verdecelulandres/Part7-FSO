@@ -7,17 +7,7 @@ import Footer from './components/Footer'
 import CreateNew from './components/CreateNew'
 
 const App = () => {
-  const { anecdotes } = useAnecdotes();
-
-
-
-  const addAnecdote = (anecdote) => {
-    // setAnecdotes(anecdotes.concat({ ...anecdote, id: Math.round(Math.random() * 10000) }))
-  }
-
-  if (anecdotes.length === 0) {
-    return <p>Loading anecdotes</p>
-  }
+  const { anecdotes, addAnecdote } = useAnecdotes();
 
   return (
     <Router>

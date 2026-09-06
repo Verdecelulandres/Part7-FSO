@@ -29,14 +29,24 @@ const useAnecdotes = () => {
     anecdoteService.getAll().then(data => setAnecdotes(data));
   }, []);
   
-  const addAnecdote = async (anecdote) => {
-    const newAnecdote = await anecdoteService.createNew(anecdote);
+  const addAnecdote = (anecdote) => {
+    const newAnecdote = anecdoteService.createNew(anecdote);
     if (newAnecdote) {
       setAnecdotes(anecdotes.concat(newAnecdote));
     }
   }
+
+  const deleteAnecdote = (id) => {
+    console.log(id);
+    const del = anecdoteService.remove(id);
+    console.log(del);
+    
+    if (del) {
+      setAnecdotes(anecdotes.filter(a => a.id !== id));
+    }
+  }
   
-  return { anecdotes, addAnecdote }
+  return { anecdotes, addAnecdote, deleteAnecdote }
 
 }
 

@@ -1,7 +1,8 @@
-import { useField } from "../hooks";
+import { useField, useAnecdotes } from "../hooks";
 import { useNavigate } from "react-router-dom"
 
-const CreateNew = ({ addNew }) => {
+const CreateNew = () => {
+  const { addAnecdote } = useAnecdotes();
   const content = useField('text');
   const author = useField('text');
   const info = useField('text');
@@ -22,7 +23,7 @@ const CreateNew = ({ addNew }) => {
       info: info.value,
       votes: 0
     }
-    addNew(newAnecdote);
+    addAnecdote(newAnecdote);
     navigate("/")
   }
 

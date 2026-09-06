@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import anecdoteService from './services/anecdotes';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useAnecdotes } from './hooks';
 import Menu from './components/Menu'
 import AnecdoteList from './components/AnecdoteList'
 import About from './components/About'
@@ -8,14 +7,16 @@ import Footer from './components/Footer'
 import CreateNew from './components/CreateNew'
 
 const App = () => {
-  const [anecdotes, setAnecdotes] = useState([]);
+  const { anecdotes } = useAnecdotes();
 
-  useEffect(() => {
-    anecdoteService.getAll().then(data =>setAnecdotes(data));
-  }, []);
+
 
   const addAnecdote = (anecdote) => {
-    setAnecdotes(anecdotes.concat({ ...anecdote, id: Math.round(Math.random() * 10000) }))
+    // setAnecdotes(anecdotes.concat({ ...anecdote, id: Math.round(Math.random() * 10000) }))
+  }
+
+  if (anecdotes.length === 0) {
+    return <p>Loading anecdotes</p>
   }
 
   return (

@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const config = require('./utils/config');
 const logger = require('./utils/logger');
@@ -24,6 +25,13 @@ app.use('/api/login', loginRouter);
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing');
   app.use('/api/test', testingRouter);
+}
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.get('/*splat', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/inde.html'));
+  });
 }
 
 app.use(middleware.errorHandler);

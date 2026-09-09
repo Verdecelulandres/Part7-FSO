@@ -1,0 +1,39 @@
+{
+  "name": "bloglist",
+  "version": "1.0.0",
+  "description": "Full stack open course part 4 excercise submissions",
+  "homepage": "https://github.com/Verdecelulandres/Part4-FSO#readme",
+  "bugs": {
+    "url": "https://github.com/Verdecelulandres/Part4-FSO/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Verdecelulandres/Part4-FSO.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development node --watch index.js",
+    "test": "cross-env NODE_ENV=test node --test",
+    "lint": "eslint .",
+    "start:test": "cross-env NODE_ENV=test node --watch index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.9.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^10.8.1",
+    "globals": "^17.11.0",
+    "supertest": "^7.2.2"
+  }
+}

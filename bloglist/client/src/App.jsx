@@ -3,6 +3,7 @@ import { Routes, Route, Link, useMatch, useNavigate } from 'react-router-dom';
 import { Container, AppBar, Toolbar, Button, Typography } from '@mui/material';
 import blogService from './services/blogs';
 import loginService from './services/login';
+import ErrorBoundary from './ErrorBoundary';
 import BlogList from './components/BlogList';
 import Blog from './components/Blog';
 import Notification from './components/Notification';
@@ -157,23 +158,31 @@ const App = () => {
       }
       <Routes>
         <Route path="/" element={
-          <BlogList blogs={blogs} />
+          <ErrorBoundary>
+            <BlogList blogs={blogs} />
+          </ErrorBoundary>
         } />
         <Route path="/create" element={
-          <CreateBlogForm createNewBlog={handleNewBlog} />
+          <ErrorBoundary>
+            <CreateBlogForm createNewBlog={handleNewBlog} />
+          </ErrorBoundary>
         } />
         <Route path="/login" element={
-          <LoginForm
-            login={handleLogin}
-          />
+          <ErrorBoundary>
+            <LoginForm
+              login={handleLogin}
+            />
+          </ErrorBoundary>
         } />
         <Route path="/blogs/:id" element={
-          <Blog
-            blog={selectedBlog}
-            likeBlog={likeBlog}
-            removeBlog={removeBlog}
-            loggedUser={user}
-          />
+          <ErrorBoundary>
+            <Blog
+              blog={selectedBlog}
+              likeBlog={likeBlog}
+              removeBlog={removeBlog}
+              loggedUser={user}
+            />
+          </ErrorBoundary>
         } />
       </Routes>
     </Container>

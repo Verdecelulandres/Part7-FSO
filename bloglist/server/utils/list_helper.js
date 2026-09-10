@@ -1,14 +1,16 @@
 const dummy = (blogs) => {
   return blogs.length > 0 ? 1 : 1;
-}
+};
 
 const totalLikes = (blogs) => {
   if (blogs.length === 0) {
     return 0;
   }
-  return blogs.reduce((sum, current) =>
-    sum + (current.likes ? current.likes : 0), 0);
-}
+  return blogs.reduce(
+    (sum, current) => sum + (current.likes ? current.likes : 0),
+    0,
+  );
+};
 
 const favoriteBlog = (blogs) => {
   if (blogs.length === 0) {
@@ -16,14 +18,14 @@ const favoriteBlog = (blogs) => {
   }
   let mostLiked = {};
   let maxLikes = 0;
-  blogs.forEach(b => {
+  blogs.forEach((b) => {
     if (b.likes > maxLikes) {
       maxLikes = b.likes;
       mostLiked = b;
     }
   });
   return mostLiked;
-}
+};
 
 const mostBlogs = (blogs) => {
   if (blogs.length === 0) {
@@ -31,10 +33,10 @@ const mostBlogs = (blogs) => {
   }
   let authors = new Map();
   let maxBlogs = 0;
-  let maxAuthor = '';
-  blogs.forEach(b => {
+  let maxAuthor = "";
+  blogs.forEach((b) => {
     if (authors.has(b.author)) {
-      authors.set(b.author, (authors.get(b.author) + 1));
+      authors.set(b.author, authors.get(b.author) + 1);
     } else {
       authors.set(b.author, 1);
     }
@@ -44,7 +46,7 @@ const mostBlogs = (blogs) => {
     }
   });
   return { author: maxAuthor, blogs: maxBlogs };
-}
+};
 
 const mostLikes = (blogs) => {
   if (blogs.length === 0) {
@@ -52,10 +54,10 @@ const mostLikes = (blogs) => {
   }
   let authors = new Map();
   let maxLikes = 0;
-  let maxAuthor = '';
-  blogs.forEach(b => {
+  let maxAuthor = "";
+  blogs.forEach((b) => {
     if (authors.has(b.author)) {
-      authors.set(b.author, (authors.get(b.author) + b.likes));
+      authors.set(b.author, authors.get(b.author) + b.likes);
     } else {
       authors.set(b.author, b.likes);
     }
@@ -65,12 +67,12 @@ const mostLikes = (blogs) => {
     }
   });
   return { author: maxAuthor, likes: maxLikes };
-}
+};
 
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
   mostBlogs,
-  mostLikes
-}
+  mostLikes,
+};

@@ -1,17 +1,16 @@
-import { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { useState } from "react";
+import { TextField, Button } from "@mui/material";
 
 const LoginForm = ({ login }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = event => {
+  const handleLogin = (event) => {
     event.preventDefault();
     login({ username, password });
-    setUsername('');
-    setPassword('');
-  }
+    setUsername("");
+    setPassword("");
+  };
 
   return (
     <>
@@ -40,9 +39,8 @@ const LoginForm = ({ login }) => {
           </Button>
         </div>
       </form>
-
     </>
   );
-}
+};
 
 export default LoginForm;

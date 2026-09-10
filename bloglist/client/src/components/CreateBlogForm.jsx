@@ -1,22 +1,21 @@
-import { useState } from 'react';
-import { TextField, Button } from '@mui/material';
+import { useState } from "react";
+import { TextField, Button } from "@mui/material";
 
 const CreateBlogForm = ({ createNewBlog }) => {
+  const [blogTitle, setBlogTitle] = useState("");
+  const [blogAuthor, setBlogAuthor] = useState("");
+  const [blogUrl, setBlogUrl] = useState("");
 
-  const [blogTitle, setBlogTitle] = useState('');
-  const [blogAuthor, setBlogAuthor] = useState('');
-  const [blogUrl, setBlogUrl] = useState('');
-
-  const handleBlogChange = event => {
+  const handleBlogChange = (event) => {
     const { name, value } = event.target;
-    if (name === 'blogTitle') {
+    if (name === "blogTitle") {
       setBlogTitle(value);
-    } else if (name === 'blogAuthor') {
+    } else if (name === "blogAuthor") {
       setBlogAuthor(value);
-    } else if (name === 'blogUrl') {
+    } else if (name === "blogUrl") {
       setBlogUrl(value);
     }
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,14 +23,14 @@ const CreateBlogForm = ({ createNewBlog }) => {
     const newBlog = {
       title: blogTitle,
       author: blogAuthor,
-      url: blogUrl
-    }
+      url: blogUrl,
+    };
 
     createNewBlog(newBlog);
-    setBlogTitle('');
-    setBlogAuthor('');
-    setBlogUrl('');
-  }
+    setBlogTitle("");
+    setBlogAuthor("");
+    setBlogUrl("");
+  };
   const inputSpacing = { marginBottom: 10 };
 
   return (
@@ -76,6 +75,6 @@ const CreateBlogForm = ({ createNewBlog }) => {
       </form>
     </>
   );
-}
+};
 
-export default CreateBlogForm
+export default CreateBlogForm;

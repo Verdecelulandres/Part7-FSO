@@ -184,6 +184,12 @@ const App = () => {
             />
           </ErrorBoundary>
         } />
+        {/* Catchall unspecified requests */}
+        <Route path="/*" element={
+          <ErrorBoundary>
+            <h1>404 - Page not found</h1>
+          </ErrorBoundary>
+        } />
       </Routes>
     </Container>
   )

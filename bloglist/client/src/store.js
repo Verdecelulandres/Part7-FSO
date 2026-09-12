@@ -38,15 +38,31 @@ const useBlogStore = create((set, get) => ({
     removeBlog: async (id) => {
       try {
         await blogService.deleteBlog(id);
-        set(state => ({ blogs: state.blogs.filter(b => b.id !== id) }));
+        set((state) => ({ blogs: state.blogs.filter((b) => b.id !== id) }));
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     findBlog: (id) => get().blogs.find((b) => b.id === id),
   },
 }));
 
+const userStorageStr = "blogAppUser";
+
+const useUserStore = create((set) => ({
+  user: {},
+  loadUser: () => {
+    const storedUser = window.localStorage.getItem(userStorageStr);
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      blogService.setToken(user.token);
+      set(() => ({ user }));
+    }
+  },
+  actions: {},
+}));
+
 export const useNotification = () => useNotificationStore();
 export const useBlogs = () => useBlogStore();
 export const useBlogActions = () => useBlogStore((state) => state.actions);
+export const useUser = () => useUserStore();

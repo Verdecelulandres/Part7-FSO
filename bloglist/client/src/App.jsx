@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useBlogs, useNotification } from "./store";
+import { useEffect } from "react";
+import { useBlogs, useNotification, useUser } from "./store";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Container, AppBar, Toolbar, Button, Typography } from "@mui/material";
 import blogService from "./services/blogs";
@@ -12,32 +12,24 @@ import LoginForm from "./components/LoginForm";
 import CreateBlogForm from "./components/CreateBlogForm";
 
 const App = () => {
-  const [user, setUser] = useState(null);
   const { initialize } = useBlogs();
+  const { loadUser, user } = useUser();
   const { displayNotification } = useNotification();
 
   useEffect(() => {
     initialize();
-  }, [initialize]);
+    loadUser();
+  }, [initialize, loadUser]);
 
   const navigate = useNavigate();
 
   const userStorageStr = "blogAppUser";
 
-  useEffect(() => {
-    const storedUser = window.localStorage.getItem(userStorageStr);
-    if (storedUser) {
-      const loggedInUser = JSON.parse(storedUser);
-      blogService.setToken(loggedInUser.token);
-      setUser(loggedInUser);
-    }
-  }, []);
-
   const handleLogin = async (loginData) => {
     try {
       const JSONusr = await loginService.login(loginData);
       if (JSONusr) {
-        setUser(JSONusr);
+        // setUser(JSONusr);
         window.localStorage.setItem(userStorageStr, JSON.stringify(JSONusr));
         blogService.setToken(JSONusr.token);
         navigate("/");
@@ -49,7 +41,7 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    setUser(null);
+    // setUser(null);
     window.localStorage.removeItem(userStorageStr);
     navigate("/");
   };

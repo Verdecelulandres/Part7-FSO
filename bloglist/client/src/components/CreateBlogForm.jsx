@@ -1,10 +1,17 @@
 import { useState } from "react";
+import { useNotification, useBlogActions } from "../store";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 
-const CreateBlogForm = ({ createNewBlog }) => {
+const CreateBlogForm = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogAuthor, setBlogAuthor] = useState("");
   const [blogUrl, setBlogUrl] = useState("");
+
+  const { displayNotification } = useNotification();
+  const { createBlog } = useBlogActions();
+
+  const navigate = useNavigate();
 
   const handleBlogChange = (event) => {
     const { name, value } = event.target;
@@ -25,11 +32,21 @@ const CreateBlogForm = ({ createNewBlog }) => {
       author: blogAuthor,
       url: blogUrl,
     };
-
-    createNewBlog(newBlog);
-    setBlogTitle("");
-    setBlogAuthor("");
-    setBlogUrl("");
+    try {
+      createBlog(newBlog);
+      setBlogTitle("");
+      setBlogAuthor("");
+      setBlogUrl("");
+      displayNotification(
+        `a new blog ${blogTitle} by ${blogAuthor} added`,
+        "success",
+      );
+    } catch (error) {
+      console.error(error);
+      displayNotification(error.response.data.error, "error");
+    } finally {
+      navigate("/");
+    }
   };
   const inputSpacing = { marginBottom: 10 };
 

@@ -16,11 +16,16 @@ const useBlogStore = create((set) => ({
   blogs: [],
   initialize: async () => {
     const blogs = await blogService.getAll();
-    console.log(blogs);
     set(() => ({ blogs }));
   },
-  actions: {},
+  actions: {
+    createBlog: async (newBlog) => {
+      const savedBlog = await blogService.create(newBlog);
+      set((state) => ({ blogs: [...state.blogs, savedBlog] }));
+    },
+  },
 }));
 
 export const useNotification = () => useNotificationStore();
 export const useBlogs = () => useBlogStore();
+export const useBlogActions = () => useBlogStore(state => state.actions);

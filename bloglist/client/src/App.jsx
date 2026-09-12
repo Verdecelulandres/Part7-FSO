@@ -51,24 +51,6 @@ const App = () => {
     navigate("/");
   };
 
-  const handleNewBlog = async (newBlog) => {
-    try {
-      const savedBlog = await blogService.create(newBlog);
-      const userId = savedBlog.user;
-      savedBlog.user = { id: userId, name: user.name, username: user.username };
-      setBlogs(blogs.concat(savedBlog));
-
-      displayNotification(
-        `a new blog ${savedBlog.title} by ${savedBlog.author} added`,
-        "success",
-      );
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      displayNotification(error.response.data.error, "error");
-    }
-  };
-
   const likeBlog = async (updatedBlog) => {
     try {
       const likedBlog = await blogService.like(updatedBlog);
@@ -154,7 +136,7 @@ const App = () => {
           path="/create"
           element={
             <ErrorBoundary>
-              <CreateBlogForm createNewBlog={handleNewBlog} />
+              <CreateBlogForm />
             </ErrorBoundary>
           }
         />

@@ -91,25 +91,6 @@ const App = () => {
   //   }
   // };
 
-  const removeBlog = async (blogToDelete) => {
-    const { title, id, author } = blogToDelete;
-    if (!window.confirm(`Remove blog ${title} by ${author}?`)) {
-      return;
-    }
-    try {
-      await blogService.deleteBlog(id);
-      // setBlogs(blogs.filter((b) => b.id !== id));
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // const singleBlogMatch = useMatch("/blogs/:id");
-  // const selectedBlog = singleBlogMatch
-  //   ? blogs.find((b) => b.id === singleBlogMatch.params.id)
-  //   : null;
-
   const style = { "&:hover": { bgcolor: "rgba(255,255,255,0.3)" } };
   return (
     <Container>
@@ -174,7 +155,6 @@ const App = () => {
           element={
             <ErrorBoundary>
               <Blog
-                removeBlog={removeBlog}
                 loggedUser={user}
               />
             </ErrorBoundary>

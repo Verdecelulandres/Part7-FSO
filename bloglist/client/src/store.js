@@ -35,6 +35,14 @@ const useBlogStore = create((set, get) => ({
         console.error(error);
       }
     },
+    removeBlog: async (id) => {
+      try {
+        await blogService.deleteBlog(id);
+        set(state => ({ blogs: state.blogs.filter(b => b.id !== id) }));
+      } catch (error) {
+        console.log(error);
+      }
+    },
     findBlog: (id) => get().blogs.find((b) => b.id === id),
   },
 }));

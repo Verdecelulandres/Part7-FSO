@@ -1,12 +1,14 @@
-import { useMatch } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import { useBlogActions } from "../store";
 import { Typography, Button, Paper, Link } from "@mui/material";
 
-const Blog = ({ removeBlog, loggedUser }) => {
-  const { likeBlog, findBlog } = useBlogActions();
+const Blog = ({ loggedUser }) => {
+  const { likeBlog, findBlog, removeBlog } = useBlogActions();
 
   const singleBlogMatch = useMatch("/blogs/:id");
   const blog = findBlog(singleBlogMatch.params.id);
+
+  const navigate = useNavigate();
 
   if (!blog) {
     return null;
@@ -19,6 +21,16 @@ const Blog = ({ removeBlog, loggedUser }) => {
       user: blog.user.id,
     };
     likeBlog(updatedBlog);
+  };
+
+  const handleRemove = () => {
+    const { title, author, id } = blog;
+    if (!window.confirm(`Remove blog ${title} by ${author}?`)) {
+      return;
+    }
+
+    removeBlog(id);
+    navigate("/");
   };
 
   const madeByUser = loggedUser && loggedUser.name === blog.user.name;
@@ -61,7 +73,7 @@ const Blog = ({ removeBlog, loggedUser }) => {
         {madeByUser && (
           <Button
             className="blog-remove-btn"
-            onClick={() => removeBlog(blog)}
+            onClick={handleRemove}
             variant="outlined"
             color="error"
           >

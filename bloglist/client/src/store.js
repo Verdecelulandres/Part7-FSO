@@ -24,12 +24,16 @@ const useBlogStore = create((set, get) => ({
       set((state) => ({ blogs: [...state.blogs, savedBlog] }));
     },
     likeBlog: async (updatedBlog) => {
-      const likedBlog = await blogService.like(updatedBlog);
-      set((state) => ({
-        blogs: state.blogs.map((b) =>
-          b.id === likedBlog.id ? { ...b, likes: ++b.likes } : b,
-        ),
-      }));
+      try {
+        const likedBlog = await blogService.like(updatedBlog);
+        set((state) => ({
+          blogs: state.blogs.map((b) =>
+            b.id === likedBlog.id ? { ...b, likes: ++b.likes } : b,
+          ),
+        }));
+      } catch (error) {
+        console.error(error);
+      }
     },
     findBlog: (id) => get().blogs.find((b) => b.id === id),
   },

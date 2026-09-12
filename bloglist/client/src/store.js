@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import blogService from "./services/blogs";
 
 const useNotificationStore = create((set) => ({
   message: "",
@@ -11,4 +12,15 @@ const useNotificationStore = create((set) => ({
   },
 }));
 
+const useBlogStore = create((set) => ({
+  blogs: [],
+  initialize: async () => {
+    const blogs = await blogService.getAll();
+    console.log(blogs);
+    set(() => ({ blogs }));
+  },
+  actions: {},
+}));
+
 export const useNotification = () => useNotificationStore();
+export const useBlogs = () => useBlogStore();

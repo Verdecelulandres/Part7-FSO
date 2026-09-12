@@ -1,8 +1,12 @@
+import { useNotification } from "../store";
 import { Alert } from "@mui/material";
 
-const Notification = ({ message, isError }) => {
-  // const baseClass = `notification ${isError ? 'error' : 'success'}`;
-  const severity = isError ? "error" : "success";
+const Notification = () => {
+  const { message, severity } = useNotification();
+
+  if (message === "") {
+    return <></>;
+  }
   return <Alert severity={severity}>{message}</Alert>;
 };
 

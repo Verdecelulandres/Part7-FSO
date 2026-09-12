@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "./store";
 import { Routes, Route, Link, useMatch, useNavigate } from "react-router-dom";
 import { Container, AppBar, Toolbar, Button, Typography } from "@mui/material";
 import blogService from "./services/blogs";
@@ -13,8 +14,8 @@ import CreateBlogForm from "./components/CreateBlogForm";
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [notificationMsg, setNotificationMsg] = useState("");
-  const [isError, setIsError] = useState(false);
+
+  const { displayNotification } = useNotification();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -44,8 +45,7 @@ const App = () => {
       }
     } catch (error) {
       console.error(error);
-      setIsError(true);
-      displayNotification("wrong username or password");
+      displayNotification("wrong username or password", "error");
     }
   };
 
@@ -64,12 +64,12 @@ const App = () => {
 
       displayNotification(
         `a new blog ${savedBlog.title} by ${savedBlog.author} added`,
+        "success",
       );
       navigate("/");
     } catch (error) {
       console.error(error);
-      setIsError(true);
-      displayNotification(error.response.data.error);
+      displayNotification(error.response.data.error, "error");
     }
   };
 
@@ -106,14 +106,6 @@ const App = () => {
     }
   };
 
-  const displayNotification = (msg) => {
-    setNotificationMsg(msg);
-
-    setTimeout(() => {
-      setNotificationMsg("");
-      setIsError(false);
-    }, 5000);
-  };
   const singleBlogMatch = useMatch("/blogs/:id");
   const selectedBlog = singleBlogMatch
     ? blogs.find((b) => b.id === singleBlogMatch.params.id)
@@ -150,9 +142,9 @@ const App = () => {
           </div>
         </Toolbar>
       </AppBar>
-      {notificationMsg && (
-        <Notification message={notificationMsg} isError={isError} />
-      )}
+
+      <Notification />
+
       <Routes>
         <Route
           path="/"

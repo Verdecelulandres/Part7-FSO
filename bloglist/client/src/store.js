@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import blogService from "./services/blogs";
+import loginService from "./services/login";
 
 const useNotificationStore = create((set) => ({
   message: "",
@@ -59,10 +60,18 @@ const useUserStore = create((set) => ({
       set(() => ({ user }));
     }
   },
-  actions: {},
+  actions: {
+    login: async (loginData) => {
+      const user = await loginService.login(loginData);
+      window.localStorage.setItem(userStorageStr, JSON.stringify(user));
+      blogService.setToken(user.token);
+      set(() => ({ user }));
+    },
+  },
 }));
 
 export const useNotification = () => useNotificationStore();
 export const useBlogs = () => useBlogStore();
 export const useBlogActions = () => useBlogStore((state) => state.actions);
 export const useUser = () => useUserStore();
+export const useUserActions = () => useUserStore((state) => state.actions);

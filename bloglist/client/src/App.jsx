@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { useBlogs, useNotification, useUser } from "./store";
+import { useBlogs, useUser } from "./store";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Container, AppBar, Toolbar, Button, Typography } from "@mui/material";
-import blogService from "./services/blogs";
-import loginService from "./services/login";
 import ErrorBoundary from "./ErrorBoundary";
 import BlogList from "./components/BlogList";
 import Blog from "./components/Blog";
@@ -14,7 +12,6 @@ import CreateBlogForm from "./components/CreateBlogForm";
 const App = () => {
   const { initialize } = useBlogs();
   const { loadUser, user } = useUser();
-  const { displayNotification } = useNotification();
 
   useEffect(() => {
     initialize();
@@ -25,20 +22,19 @@ const App = () => {
 
   const userStorageStr = "blogAppUser";
 
-  const handleLogin = async (loginData) => {
-    try {
-      const JSONusr = await loginService.login(loginData);
-      if (JSONusr) {
-        // setUser(JSONusr);
-        window.localStorage.setItem(userStorageStr, JSON.stringify(JSONusr));
-        blogService.setToken(JSONusr.token);
-        navigate("/");
-      }
-    } catch (error) {
-      console.error(error);
-      displayNotification("wrong username or password", "error");
-    }
-  };
+  // const handleLogin = async (loginData) => {
+  //   try {
+  //     const JSONusr = await loginService.login(loginData);
+  //     if (JSONusr) {
+  //       // setUser(JSONusr);
+  //       window.localStorage.setItem(userStorageStr, JSON.stringify(JSONusr));
+  //       blogService.setToken(JSONusr.token);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     displayNotification("wrong username or password", "error");
+  //   }
+  // };
 
   const handleLogout = () => {
     // setUser(null);
@@ -138,7 +134,7 @@ const App = () => {
           path="/login"
           element={
             <ErrorBoundary>
-              <LoginForm login={handleLogin} />
+              <LoginForm />
             </ErrorBoundary>
           }
         />

@@ -67,6 +67,11 @@ const useUserStore = create((set) => ({
       blogService.setToken(user.token);
       set(() => ({ user }));
     },
+    logout: () => {
+      window.localStorage.removeItem(userStorageStr);
+      blogService.setToken("");
+      set(() => ({ user: null }));
+    }
   },
 }));
 

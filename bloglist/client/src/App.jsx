@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useBlogs, useUser } from "./store";
+import { useBlogs, useUser, useUserActions } from "./store";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Container, AppBar, Toolbar, Button, Typography } from "@mui/material";
 import ErrorBoundary from "./ErrorBoundary";
@@ -12,6 +12,7 @@ import CreateBlogForm from "./components/CreateBlogForm";
 const App = () => {
   const { initialize } = useBlogs();
   const { loadUser, user } = useUser();
+  const { logout } = useUserActions();
 
   useEffect(() => {
     initialize();
@@ -20,7 +21,7 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  const userStorageStr = "blogAppUser";
+  // const userStorageStr = "blogAppUser";
 
   // const handleLogin = async (loginData) => {
   //   try {
@@ -37,8 +38,7 @@ const App = () => {
   // };
 
   const handleLogout = () => {
-    // setUser(null);
-    window.localStorage.removeItem(userStorageStr);
+    logout();
     navigate("/");
   };
 

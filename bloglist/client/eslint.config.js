@@ -30,7 +30,7 @@ export default [
       ],
       indent: ["warn", 2],
       "linebreak-style": ["warn", "unix"],
-      quotes: ["warn", "single"],
+      quotes: ["warn", "double"],
       eqeqeq: "warn",
       "no-trailing-spaces": "warn",
       "object-curly-spacing": ["warn", "always"],

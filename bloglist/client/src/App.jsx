@@ -21,63 +21,10 @@ const App = () => {
 
   const navigate = useNavigate();
 
-  // const userStorageStr = "blogAppUser";
-
-  // const handleLogin = async (loginData) => {
-  //   try {
-  //     const JSONusr = await loginService.login(loginData);
-  //     if (JSONusr) {
-  //       // setUser(JSONusr);
-  //       window.localStorage.setItem(userStorageStr, JSON.stringify(JSONusr));
-  //       blogService.setToken(JSONusr.token);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     displayNotification("wrong username or password", "error");
-  //   }
-  // };
-
   const handleLogout = () => {
     logout();
     navigate("/");
   };
-
-  // const handleNewBlog = async (newBlog) => {
-  //   try {
-  //     const savedBlog = await blogService.create(newBlog);
-  //     const userId = savedBlog.user;
-  //     savedBlog.user = { id: userId, name: user.name, username: user.username };
-  //     setBlogs(blogs.concat(savedBlog));
-
-  //     displayNotification(
-  //       `a new blog ${savedBlog.title} by ${savedBlog.author} added`,
-  //       "success",
-  //     );
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error(error);
-  //     displayNotification(error.response.data.error, "error");
-  //   }
-  // };
-
-  // const likeBlog = async (updatedBlog) => {
-  //   try {
-  //     const likedBlog = await blogService.like(updatedBlog);
-
-  //     setBlogs(
-  //       blogs.map((b) => {
-  //         if (b.id === updatedBlog.id) {
-  //           const fullUser = b.user;
-  //           b = likedBlog;
-  //           b.user = fullUser;
-  //         }
-  //         return b;
-  //       }),
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const style = { "&:hover": { bgcolor: "rgba(255,255,255,0.3)" } };
   return (
@@ -142,9 +89,7 @@ const App = () => {
           path="/blogs/:id"
           element={
             <ErrorBoundary>
-              <Blog
-                loggedUser={user}
-              />
+              <Blog loggedUser={user} />
             </ErrorBoundary>
           }
         />

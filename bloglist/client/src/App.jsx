@@ -17,10 +17,6 @@ const App = () => {
 
   const { displayNotification } = useNotification();
 
-  useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-  }, []);
-
   const navigate = useNavigate();
 
   const userStorageStr = "blogAppUser";
@@ -150,7 +146,7 @@ const App = () => {
           path="/"
           element={
             <ErrorBoundary>
-              <BlogList blogs={blogs} />
+              <BlogList />
             </ErrorBoundary>
           }
         />

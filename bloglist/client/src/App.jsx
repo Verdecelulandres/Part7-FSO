@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNotification } from "./store";
-import { Routes, Route, Link, useMatch, useNavigate } from "react-router-dom";
+import { useBlogs, useNotification } from "./store";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Container, AppBar, Toolbar, Button, Typography } from "@mui/material";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -12,10 +12,13 @@ import LoginForm from "./components/LoginForm";
 import CreateBlogForm from "./components/CreateBlogForm";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-
+  const { initialize } = useBlogs();
   const { displayNotification } = useNotification();
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
 
   const navigate = useNavigate();
 
@@ -51,24 +54,42 @@ const App = () => {
     navigate("/");
   };
 
-  const likeBlog = async (updatedBlog) => {
-    try {
-      const likedBlog = await blogService.like(updatedBlog);
+  // const handleNewBlog = async (newBlog) => {
+  //   try {
+  //     const savedBlog = await blogService.create(newBlog);
+  //     const userId = savedBlog.user;
+  //     savedBlog.user = { id: userId, name: user.name, username: user.username };
+  //     setBlogs(blogs.concat(savedBlog));
 
-      setBlogs(
-        blogs.map((b) => {
-          if (b.id === updatedBlog.id) {
-            const fullUser = b.user;
-            b = likedBlog;
-            b.user = fullUser;
-          }
-          return b;
-        }),
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     displayNotification(
+  //       `a new blog ${savedBlog.title} by ${savedBlog.author} added`,
+  //       "success",
+  //     );
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.error(error);
+  //     displayNotification(error.response.data.error, "error");
+  //   }
+  // };
+
+  // const likeBlog = async (updatedBlog) => {
+  //   try {
+  //     const likedBlog = await blogService.like(updatedBlog);
+
+  //     setBlogs(
+  //       blogs.map((b) => {
+  //         if (b.id === updatedBlog.id) {
+  //           const fullUser = b.user;
+  //           b = likedBlog;
+  //           b.user = fullUser;
+  //         }
+  //         return b;
+  //       }),
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const removeBlog = async (blogToDelete) => {
     const { title, id, author } = blogToDelete;
@@ -77,17 +98,17 @@ const App = () => {
     }
     try {
       await blogService.deleteBlog(id);
-      setBlogs(blogs.filter((b) => b.id !== id));
+      // setBlogs(blogs.filter((b) => b.id !== id));
       navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const singleBlogMatch = useMatch("/blogs/:id");
-  const selectedBlog = singleBlogMatch
-    ? blogs.find((b) => b.id === singleBlogMatch.params.id)
-    : null;
+  // const singleBlogMatch = useMatch("/blogs/:id");
+  // const selectedBlog = singleBlogMatch
+  //   ? blogs.find((b) => b.id === singleBlogMatch.params.id)
+  //   : null;
 
   const style = { "&:hover": { bgcolor: "rgba(255,255,255,0.3)" } };
   return (
@@ -153,8 +174,6 @@ const App = () => {
           element={
             <ErrorBoundary>
               <Blog
-                blog={selectedBlog}
-                likeBlog={likeBlog}
                 removeBlog={removeBlog}
                 loggedUser={user}
               />

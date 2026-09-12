@@ -1,6 +1,13 @@
+import { useMatch } from "react-router-dom";
+import { useBlogActions } from "../store";
 import { Typography, Button, Paper, Link } from "@mui/material";
 
-const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
+const Blog = ({ removeBlog, loggedUser }) => {
+  const { likeBlog, findBlog } = useBlogActions();
+
+  const singleBlogMatch = useMatch("/blogs/:id");
+  const blog = findBlog(singleBlogMatch.params.id);
+
   if (!blog) {
     return null;
   }

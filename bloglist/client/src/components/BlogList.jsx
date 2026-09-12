@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
 import { useBlogs } from "../store";
-import { useEffect } from "react";
 
 const BlogList = () => {
-  const { blogs, initialize } = useBlogs();
-
-  useEffect(() => {
-    initialize();
-  }, [initialize]);
+  const { blogs } = useBlogs();
 
   return (
     <div>

@@ -13,6 +13,33 @@ const useNotificationStore = create((set) => ({
   },
 }));
 
+const userStorageStr = "blogAppUser";
+
+const useUserStore = create((set) => ({
+  user: null,
+  loadUser: () => {
+    const storedUser = window.localStorage.getItem(userStorageStr);
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      blogService.setToken(user.token);
+      set(() => ({ user }));
+    }
+  },
+  actions: {
+    login: async (loginData) => {
+      const user = await loginService.login(loginData);
+      window.localStorage.setItem(userStorageStr, JSON.stringify(user));
+      blogService.setToken(user.token);
+      set(() => ({ user }));
+    },
+    logout: () => {
+      window.localStorage.removeItem(userStorageStr);
+      blogService.setToken("");
+      set(() => ({ user: null }));
+    },
+  },
+}));
+
 const useBlogStore = create((set, get) => ({
   blogs: [],
   initialize: async () => {
@@ -22,6 +49,9 @@ const useBlogStore = create((set, get) => ({
   actions: {
     createBlog: async (newBlog) => {
       const savedBlog = await blogService.create(newBlog);
+      const { username, name } = useUserStore.getState().user;
+      const id = savedBlog.user;
+      savedBlog.user = { id, username, name };
       set((state) => ({ blogs: [...state.blogs, savedBlog] }));
     },
     likeBlog: async (updatedBlog) => {
@@ -45,33 +75,6 @@ const useBlogStore = create((set, get) => ({
       }
     },
     findBlog: (id) => get().blogs.find((b) => b.id === id),
-  },
-}));
-
-const userStorageStr = "blogAppUser";
-
-const useUserStore = create((set) => ({
-  user: {},
-  loadUser: () => {
-    const storedUser = window.localStorage.getItem(userStorageStr);
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      blogService.setToken(user.token);
-      set(() => ({ user }));
-    }
-  },
-  actions: {
-    login: async (loginData) => {
-      const user = await loginService.login(loginData);
-      window.localStorage.setItem(userStorageStr, JSON.stringify(user));
-      blogService.setToken(user.token);
-      set(() => ({ user }));
-    },
-    logout: () => {
-      window.localStorage.removeItem(userStorageStr);
-      blogService.setToken("");
-      set(() => ({ user: null }));
-    }
   },
 }));
 

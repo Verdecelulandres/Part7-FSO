@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 
 import { useUser } from "../store";
+import { Link } from "react-router-dom";
 
 const UserList = () => {
   const { userList } = useUser();
@@ -44,7 +45,11 @@ const UserList = () => {
         <TableBody>
           {userList.map((u) => (
             <TableRow key={u.id}>
-              <TableCell>{u.name}</TableCell>
+              <TableCell>
+                <Link className="user-link" to={`/users/${u.id}`}>
+                  {u.name}
+                </Link>
+              </TableCell>
               <TableCell>{u.username}</TableCell>
               <TableCell>{u.blogs.length}</TableCell>
             </TableRow>

@@ -9,6 +9,7 @@ import Notification from "./components/Notification";
 import LoginForm from "./components/LoginForm";
 import CreateBlogForm from "./components/CreateBlogForm";
 import UserList from "./components/UserList";
+import User from "./components/User";
 
 const App = () => {
   const { initialize } = useBlogs();
@@ -105,6 +106,14 @@ const App = () => {
           element={
             <ErrorBoundary>
               <Blog />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/users/:id"
+          element={
+            <ErrorBoundary>
+              <User />
             </ErrorBoundary>
           }
         />

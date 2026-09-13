@@ -2,6 +2,7 @@ import { create } from "zustand";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 import localUserService from "./services/persistentUser";
+import userService from "./services/users";
 
 const useNotificationStore = create((set) => ({
   message: "",
@@ -16,13 +17,18 @@ const useNotificationStore = create((set) => ({
 
 const useUserStore = create((set) => ({
   user: null,
-  loadUser: () => {
+  userList: [],
+  loadUserFromStorage: () => {
     const storedUser = localUserService.getUser();
     if (storedUser) {
       const user = JSON.parse(storedUser);
       blogService.setToken(user.token);
       set(() => ({ user }));
     }
+  },
+  loadAllUsers: async () => {
+    const userList = await userService.getAll();
+    set(() => ({ userList }));
   },
   actions: {
     login: async (loginData) => {

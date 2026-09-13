@@ -12,13 +12,14 @@ import UserList from "./components/UserList";
 
 const App = () => {
   const { initialize } = useBlogs();
-  const { loadUser, user } = useUser();
+  const { loadUserFromStorage, user, loadAllUsers } = useUser();
   const { logout } = useUserActions();
 
   useEffect(() => {
     initialize();
-    loadUser();
-  }, [initialize, loadUser]);
+    loadUserFromStorage();
+    loadAllUsers();
+  }, [initialize, loadUserFromStorage, loadAllUsers]);
 
   const navigate = useNavigate();
 

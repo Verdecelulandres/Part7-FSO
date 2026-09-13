@@ -15,7 +15,7 @@ const useNotificationStore = create((set) => ({
   },
 }));
 
-const useUserStore = create((set) => ({
+const useUserStore = create((set, get) => ({
   user: null,
   userList: [],
   loadUserFromStorage: () => {
@@ -42,6 +42,7 @@ const useUserStore = create((set) => ({
       blogService.setToken("");
       set(() => ({ user: null }));
     },
+    findUser: (id) => get().userList.find((u) => u.id === id),
   },
 }));
 

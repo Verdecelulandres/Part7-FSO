@@ -8,6 +8,7 @@ import Blog from "./components/Blog";
 import Notification from "./components/Notification";
 import LoginForm from "./components/LoginForm";
 import CreateBlogForm from "./components/CreateBlogForm";
+import UserList from "./components/UserList";
 
 const App = () => {
   const { initialize } = useBlogs();
@@ -41,6 +42,11 @@ const App = () => {
               Blogs
             </Button>
             {user && (
+              <Button color="inherit" component={Link} to="/users" sx={style}>
+                users
+              </Button>
+            )}
+            {user && (
               <Button color="inherit" component={Link} to="/create" sx={style}>
                 new blog
               </Button>
@@ -66,6 +72,14 @@ const App = () => {
           element={
             <ErrorBoundary>
               <BlogList />
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ErrorBoundary>
+              <UserList />
             </ErrorBoundary>
           }
         />

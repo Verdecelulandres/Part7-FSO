@@ -104,7 +104,7 @@ const App = () => {
           path="/blogs/:id"
           element={
             <ErrorBoundary>
-              <Blog loggedUser={user} />
+              <Blog />
             </ErrorBoundary>
           }
         />

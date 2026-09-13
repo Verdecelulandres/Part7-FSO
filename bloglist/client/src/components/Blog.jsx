@@ -1,10 +1,11 @@
 import { useMatch, useNavigate } from "react-router-dom";
+import { useUser } from "../store";
 import { useBlogActions } from "../store";
 import { Typography, Button, Paper, Link } from "@mui/material";
 
-const Blog = ({ loggedUser }) => {
+const Blog = () => {
   const { likeBlog, findBlog, removeBlog } = useBlogActions();
-
+  const { user: loggedUser } = useUser();
   const singleBlogMatch = useMatch("/blogs/:id");
   const blog = findBlog(singleBlogMatch.params.id);
 

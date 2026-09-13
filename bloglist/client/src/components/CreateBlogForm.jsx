@@ -1,44 +1,30 @@
-import { useState } from "react";
+import { useField } from "../hooks/index";
 import { useNotification, useBlogActions } from "../store";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 
 const CreateBlogForm = () => {
-  const [blogTitle, setBlogTitle] = useState("");
-  const [blogAuthor, setBlogAuthor] = useState("");
-  const [blogUrl, setBlogUrl] = useState("");
+  const title = useField("text");
+  const author = useField("text");
+  const url = useField("text");
 
   const { displayNotification } = useNotification();
   const { createBlog } = useBlogActions();
 
   const navigate = useNavigate();
 
-  const handleBlogChange = (event) => {
-    const { name, value } = event.target;
-    if (name === "blogTitle") {
-      setBlogTitle(value);
-    } else if (name === "blogAuthor") {
-      setBlogAuthor(value);
-    } else if (name === "blogUrl") {
-      setBlogUrl(value);
-    }
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const newBlog = {
-      title: blogTitle,
-      author: blogAuthor,
-      url: blogUrl,
+      title: title.value,
+      author: author.value,
+      url: url.value,
     };
     try {
       createBlog(newBlog);
-      setBlogTitle("");
-      setBlogAuthor("");
-      setBlogUrl("");
       displayNotification(
-        `a new blog ${blogTitle} by ${blogAuthor} added`,
+        `a new blog ${title.value} by ${author.value} added`,
         "success",
       );
     } catch (error) {
@@ -57,31 +43,25 @@ const CreateBlogForm = () => {
         <div>
           <TextField
             label="title:"
-            type="text"
-            onChange={handleBlogChange}
-            value={blogTitle}
             name="blogTitle"
             style={inputSpacing}
+            {...title}
           />
         </div>
         <div>
           <TextField
             label="author:"
-            type="text"
-            onChange={handleBlogChange}
-            value={blogAuthor}
             name="blogAuthor"
             style={inputSpacing}
+            {...author}
           />
         </div>
         <div>
           <TextField
             label="url:"
-            type="text"
-            onChange={handleBlogChange}
-            value={blogUrl}
             name="blogUrl"
             style={inputSpacing}
+            {...url}
           />
         </div>
         <div>

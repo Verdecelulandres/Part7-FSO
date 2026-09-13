@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useField } from "../hooks/index";
 import { useNotification, useUserActions } from "../store";
 import { TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
+  const username = useField("text");
+  const password = useField("password");
 
   const { displayNotification } = useNotification();
   const { login } = useUserActions();
@@ -15,9 +16,7 @@ const LoginForm = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     try {
-      login({ username, password });
-      setUsername("");
-      setPassword("");
+      login({ username: username.value, password: password.value });
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -32,18 +31,14 @@ const LoginForm = () => {
         <div>
           <TextField
             label="username"
-            type="text"
-            onChange={({ target }) => setUsername(target.value)}
-            value={username}
+            {...username}
           />
         </div>
         <div>
           <TextField
             label="password"
-            type="password"
-            onChange={({ target }) => setPassword(target.value)}
-            value={password}
             style={{ marginTop: 10 }}
+            {...password}
           />
         </div>
         <div>

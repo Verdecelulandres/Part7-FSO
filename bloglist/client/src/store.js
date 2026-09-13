@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
+import localUserService from "./services/persistentUser";
 
 const useNotificationStore = create((set) => ({
   message: "",
@@ -13,12 +14,10 @@ const useNotificationStore = create((set) => ({
   },
 }));
 
-const userStorageStr = "blogAppUser";
-
 const useUserStore = create((set) => ({
   user: null,
   loadUser: () => {
-    const storedUser = window.localStorage.getItem(userStorageStr);
+    const storedUser = localUserService.getUser();
     if (storedUser) {
       const user = JSON.parse(storedUser);
       blogService.setToken(user.token);
@@ -28,12 +27,12 @@ const useUserStore = create((set) => ({
   actions: {
     login: async (loginData) => {
       const user = await loginService.login(loginData);
-      window.localStorage.setItem(userStorageStr, JSON.stringify(user));
+      localUserService.saveUser(user);
       blogService.setToken(user.token);
       set(() => ({ user }));
     },
     logout: () => {
-      window.localStorage.removeItem(userStorageStr);
+      localUserService.removeUser();
       blogService.setToken("");
       set(() => ({ user: null }));
     },

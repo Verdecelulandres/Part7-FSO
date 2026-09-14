@@ -82,6 +82,20 @@ const Blog = () => {
           </Button>
         )}
       </div>
+      <Typography variant="h5" gutterBottom>
+        comments
+      </Typography>
+      {blog.comments.length === 0 ? (
+        <Typography variant="subtitle1" gutterBottom>
+          This blog has no comments
+        </Typography>
+      ) : (
+        <ul>
+          {blog.comments.map((c) => (
+            <li key={c.id}>{c.content}</li>
+          ))}
+        </ul>
+      )}
     </Paper>
   );
 };

@@ -7,7 +7,7 @@ commentRouter.get("/", async (request, response) => {
   response.json(comments);
 });
 commentRouter.post("/", async (request, response) => {
-  const { content, blogid } = request.body;
+  const { content, blog: blogid } = request.body;
   const blog = await Blog.findById(blogid);
   const newComment = { content, blog: blog._id };
   const comment = new Comment(newComment);

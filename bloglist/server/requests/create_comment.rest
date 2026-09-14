@@ -3,5 +3,5 @@ Content-Type: application/json
 
 {
   "content": "test comment",
-  "blogid": "6a83c2843b7755a13cabc897"
+  "blog": "6a83c2843b7755a13cabc897"
 }

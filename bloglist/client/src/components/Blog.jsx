@@ -2,6 +2,7 @@ import { useMatch, useNavigate } from "react-router-dom";
 import { useUser } from "../store";
 import { useBlogActions } from "../store";
 import { Typography, Button, Paper, Link } from "@mui/material";
+import CommentForm from "./CommentForm";
 
 const Blog = () => {
   const { likeBlog, findBlog, removeBlog } = useBlogActions();
@@ -85,6 +86,7 @@ const Blog = () => {
       <Typography variant="h5" gutterBottom>
         comments
       </Typography>
+      <CommentForm blogid={blog.id}/>
       {blog.comments.length === 0 ? (
         <Typography variant="subtitle1" gutterBottom>
           This blog has no comments

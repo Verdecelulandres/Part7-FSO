@@ -8,6 +8,7 @@ const commentSchema = mongoose.Schema({
   blog: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Blog",
+    required: true,
   },
 });
 
@@ -18,6 +19,5 @@ commentSchema.set("toJSON", {
     delete returnedObject.__v;
   },
 });
-
 
 module.exports = mongoose.model("Comment", commentSchema);

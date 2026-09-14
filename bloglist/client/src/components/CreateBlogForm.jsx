@@ -45,7 +45,7 @@ const CreateBlogForm = () => {
             label="title:"
             name="blogTitle"
             style={inputSpacing}
-            {...title}
+            {...title.spreadable}
           />
         </div>
         <div>
@@ -53,7 +53,7 @@ const CreateBlogForm = () => {
             label="author:"
             name="blogAuthor"
             style={inputSpacing}
-            {...author}
+            {...author.spreadable}
           />
         </div>
         <div>
@@ -61,7 +61,7 @@ const CreateBlogForm = () => {
             label="url:"
             name="blogUrl"
             style={inputSpacing}
-            {...url}
+            {...url.spreadable}
           />
         </div>
         <div>

@@ -31,14 +31,14 @@ const LoginForm = () => {
         <div>
           <TextField
             label="username"
-            {...username}
+            {...username.spreadable}
           />
         </div>
         <div>
           <TextField
             label="password"
             style={{ marginTop: 10 }}
-            {...password}
+            {...password.spreadable}
           />
         </div>
         <div>

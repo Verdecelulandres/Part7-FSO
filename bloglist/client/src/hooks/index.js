@@ -7,10 +7,16 @@ const useField = (type) => {
     setValue(event.target.value);
   };
 
+  const reset = () => setValue("");
+
+  const spreadable = { type, value, onChange };
+
   return {
     type,
     value,
     onChange,
+    spreadable,
+    reset,
   };
 };
 

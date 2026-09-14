@@ -3,6 +3,7 @@ import blogService from "./services/blogs";
 import loginService from "./services/login";
 import localUserService from "./services/persistentUser";
 import userService from "./services/users";
+import commentService from "./services/comments";
 
 const useNotificationStore = create((set) => ({
   message: "",
@@ -81,6 +82,25 @@ const useBlogStore = create((set, get) => ({
       }
     },
     findBlog: (id) => get().blogs.find((b) => b.id === id),
+    comment: async (newComment) => {
+      try {
+        const {
+          content,
+          id,
+          blog: blogid,
+        } = await commentService.create(newComment);
+        set((state) => ({
+          blogs: state.blogs.map((b) => {
+            if (b.id === blogid) {
+              b.comments = b.comments.concat({ content, id });
+            }
+            return b;
+          }),
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 }));
 

@@ -1,9 +1,11 @@
 import { Button, TextField } from "@mui/material";
 import { useField } from "../hooks";
-import commentService from "../services/comments";
+import { useBlogActions } from "../store";
+
 
 const CommentForm = ({ blogid }) => {
   const content = useField("text");
+  const { comment } = useBlogActions();
 
   const createComment = async (event) => {
     event.preventDefault();
@@ -11,9 +13,7 @@ const CommentForm = ({ blogid }) => {
       content: content.value,
       blog: blogid,
     };
-
-    // TODO: make comment service to communicate with backend.
-    await commentService.create(newComment);
+    comment(newComment);
     content.reset();
   };
 

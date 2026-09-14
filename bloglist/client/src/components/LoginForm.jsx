@@ -1,6 +1,6 @@
 import { useField } from "../hooks/index";
 import { useNotification, useUserActions } from "../store";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
@@ -26,7 +26,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <h2>Login to application</h2>
+      <Typography variant="h2" sx={{ margin: "1rem 0", fontSize: "32px" }}>Login to application</Typography>
       <form onSubmit={handleLogin}>
         <div>
           <TextField

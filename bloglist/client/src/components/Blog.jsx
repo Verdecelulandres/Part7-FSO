@@ -86,7 +86,7 @@ const Blog = () => {
       <Typography variant="h5" gutterBottom>
         comments
       </Typography>
-      <CommentForm blogid={blog.id}/>
+      <CommentForm blogid={blog.id} />
       {blog.comments.length === 0 ? (
         <Typography variant="subtitle1" gutterBottom>
           This blog has no comments
@@ -94,7 +94,9 @@ const Blog = () => {
       ) : (
         <ul>
           {blog.comments.map((c) => (
-            <li key={c.id}>{c.content}</li>
+            <li key={c.id}>
+              <Typography variant="body1">{c.content}</Typography>
+            </li>
           ))}
         </ul>
       )}
